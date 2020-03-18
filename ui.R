@@ -12,13 +12,12 @@ library(coronavirus)
 library(dplyr)
 library(rnaturalearth)
 library(rnaturalearthhires)
-library(tigris)
-library(rgeos)
 
 coronavirus <- update_coronavirus_raw(returnclass = "data.frame")
 us_coronavirus <- coronavirus %>% filter(Country.Region=="United States of America")
 us_map <- ne_states(country = "United States of America", returnclass = "sf")
-ma_map <- sf::st_as_sf(counties(state="Massachusetts", cb = TRUE)) 
+#ma_map <- sf::st_as_sf(counties(state="Massachusetts", cb = TRUE)) 
+ma_map <- readRDS("./counties/Massachusetts.rds")
     
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
@@ -130,7 +129,7 @@ shinyUI(fluidPage(
                      <br><br>It uses my branch of the package, and pulls the data, fresh, every time you reload the package. The raw data pulled and arranged by the <a href="https://coronavirus.jhu.edu/">Johns Hopkins University Center for Systems Science and Engineering (JHU CCSE)</a> that is posted in <a href="https://github.com/CSSEGISandData/COVID-19">this repository</a>. 
                      <br><br><font color = "red">A warning</font>: it might not always be 100% correct. There are issues and funny things in the data, and it is being updated in realtime.
                      <br><br>If you find odd things, feel free to file an <a href="https://github.com/jebyrnes/covid19_shiny/issues">issue with me</a>, or, if it is something you notice in a data, file an issue with JHU directly <A href="https://github.com/CSSEGISandData/COVID-19/issues">here</a>.
-                     <br><br>The code for this Shiny app can be found <a href="https://github.com/jebyrnes/covid19_shiny">here</a>. Feel free to contact me if you want to contribute, fork and pull, or make suggestions.
+                     <br><br>The code for this Shiny app can be found <a href="https://github.com/jebyrnes/covid19_shiny">here</a>. Spatial data are from the rnaturalearth and tigris R libraries. Feel free to contact me if you want to contribute, fork and pull, or make suggestions.
                      <br><br>Hope you find this useful!<br><br>-<a href="http://byrneslab.net">Jarrett Byrnes</a>, <a href="http://twitter.com/jebyrnes">@jebyrnes</a>
                      ')
         )
